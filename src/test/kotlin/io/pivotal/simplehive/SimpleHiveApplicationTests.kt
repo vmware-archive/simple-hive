@@ -22,12 +22,12 @@ class SimpleHiveApplicationTests {
     lateinit var connection: Connection
 
     @Before
-    fun setUp() {
+    fun setup() {
         connection = DriverManager.getConnection("jdbc:hive2://$simpleHiveHost/default;transportMode=http;httpPath=simple-hive")
     }
 
     @After
-    fun tearDown() {
+    fun cleanup() {
         connection.close()
     }
 

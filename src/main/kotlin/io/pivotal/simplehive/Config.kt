@@ -91,7 +91,6 @@ class Config(val hiveFileSystem: HiveFileSystem) {
             throw RuntimeException(var4)
         }
 
-
         this.set("datanucleus.connectiondrivername", jdbcDriver)
         this.set("javax.jdo.option.ConnectionDriverName", jdbcDriver)
         this.set("datanucleus.connectionPoolingType", "None")
