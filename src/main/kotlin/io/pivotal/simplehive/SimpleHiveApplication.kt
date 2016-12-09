@@ -11,7 +11,7 @@ open class SimpleHiveApplication : ApplicationRunner {
 
     override fun run(args: ApplicationArguments) {
 
-        val hiveServerContainer = Container(Context(HiveFileSystem()))
+        val hiveServerContainer = Container(Config(HiveFileSystem()))
 
         hiveServerContainer.init()
 

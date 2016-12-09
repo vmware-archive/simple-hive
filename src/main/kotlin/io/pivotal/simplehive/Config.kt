@@ -5,19 +5,21 @@ import org.apache.hadoop.hive.conf.HiveConf.ConfVars
 import org.hsqldb.jdbc.JDBCDriver
 import java.util.*
 
-class Context(val hiveFileSystem: HiveFileSystem) {
+class Config(val hiveFileSystem: HiveFileSystem) {
     private val hiveConf = HiveConf()
 
-    fun build(): HiveConf = this.hiveConf
-            .configureMiscHiveSettings()
-            .configureTransportMode()
-            .configureMetaStore()
-            .configureMrExecutionEngine()
-            .configureTezExecutionEngine()
-            .configureJavaSecurityRealm()
-            .configureSupportConcurrency()
-            .configureFileSystem()
-            .configureAssertionStatus()
+    fun build(): HiveConf = this.hiveConf.configure()
+
+    private fun HiveConf.configure(): HiveConf =
+            this.configureMiscHiveSettings()
+                    .configureTransportMode()
+                    .configureMetaStore()
+                    .configureMrExecutionEngine()
+                    .configureTezExecutionEngine()
+                    .configureJavaSecurityRealm()
+                    .configureSupportConcurrency()
+                    .configureFileSystem()
+                    .configureAssertionStatus()
 
     private fun HiveConf.configureTransportMode(): HiveConf {
         setVar(ConfVars.HIVE_SERVER2_TRANSPORT_MODE, "http")
@@ -119,3 +121,4 @@ class Context(val hiveFileSystem: HiveFileSystem) {
         return this
     }
 }
+
