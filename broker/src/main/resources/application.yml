@@ -1,0 +1,2 @@
+simple.hive:
+  service.host: simple-hive-service.local.pcfdev.io

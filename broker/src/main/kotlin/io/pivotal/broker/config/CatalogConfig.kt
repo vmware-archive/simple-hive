@@ -1,4 +1,4 @@
-package io.pivotal
+package io.pivotal.broker.config
 
 import org.springframework.cloud.servicebroker.model.Catalog
 import org.springframework.cloud.servicebroker.model.Plan
@@ -22,7 +22,7 @@ open class CatalogConfig {
                         listOf(
                                 Plan("simple-hive-plan",
                                         "default",
-                                        "This is a default plan. All services are created equally.",
+                                        "This is a default plan. All service are created equally.",
                                         getPlanMetadata())),
                         listOf("tag-1", "tag-2"),
                         getServiceDefinitionMetadata(),

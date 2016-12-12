@@ -1,21 +1,18 @@
-package io.pivotal.service
+package io.pivotal.broker.service
 
+import io.pivotal.broker.config.BrokerConfig
 import org.apache.commons.logging.LogFactory
 import org.springframework.cloud.servicebroker.model.*
 import org.springframework.cloud.servicebroker.service.ServiceInstanceService
 import org.springframework.stereotype.Service
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceResponse
-import org.springframework.cloud.servicebroker.model.GetLastServiceOperationResponse
-import org.springframework.cloud.servicebroker.model.OperationState
-import org.springframework.cloud.servicebroker.model.DeleteServiceInstanceResponse
-import org.springframework.cloud.servicebroker.model.UpdateServiceInstanceResponse
 import java.sql.DriverManager
 
 @Service
-open class SimpleHiveInstanceService : ServiceInstanceService {
+open class InstanceService
+constructor(private val config: BrokerConfig) : ServiceInstanceService {
+
     companion object {
-        val log = LogFactory.getLog(SimpleHiveInstanceService::class.java)
-        val simpleHiveHost = "simple-hive-service.local.pcfdev.io"
+        val log = LogFactory.getLog(InstanceService::class.java)
     }
 
     override fun createServiceInstance(request: CreateServiceInstanceRequest): CreateServiceInstanceResponse {
@@ -25,7 +22,7 @@ open class SimpleHiveInstanceService : ServiceInstanceService {
     }
 
     private fun createDb(serviceInstanceId: String) {
-        val connection = DriverManager.getConnection("jdbc:hive2://$simpleHiveHost/default;transportMode=http;httpPath=simple-hive")
+        val connection = DriverManager.getConnection("jdbc:hive2://${config.serviceHost}/default;transportMode=http;httpPath=simple-hive")
         connection.createStatement().executeUpdate("CREATE DATABASE $serviceInstanceId")
     }
 

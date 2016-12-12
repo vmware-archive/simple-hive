@@ -1,4 +1,4 @@
-package io.pivotal.service
+package io.pivotal.broker.service
 
 import org.apache.commons.logging.LogFactory
 import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest
@@ -8,10 +8,10 @@ import org.springframework.cloud.servicebroker.service.ServiceInstanceBindingSer
 import org.springframework.stereotype.Service
 
 @Service
-open class SimpleHiveInstanceBindingService : ServiceInstanceBindingService {
+open class InstanceBindingService : ServiceInstanceBindingService {
 
     companion object {
-        val log = LogFactory.getLog(SimpleHiveInstanceBindingService::class.java)
+        val log = LogFactory.getLog(InstanceBindingService::class.java)
     }
 
     override fun deleteServiceInstanceBinding(request: DeleteServiceInstanceBindingRequest) {
