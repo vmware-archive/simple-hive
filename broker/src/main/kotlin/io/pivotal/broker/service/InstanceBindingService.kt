@@ -1,6 +1,8 @@
 package io.pivotal.broker.service
 
+import io.pivotal.broker.config.BrokerConfig
 import org.apache.commons.logging.LogFactory
+import org.springframework.cloud.servicebroker.model.CreateServiceInstanceAppBindingResponse
 import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest
 import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingResponse
 import org.springframework.cloud.servicebroker.model.DeleteServiceInstanceBindingRequest
@@ -8,18 +10,24 @@ import org.springframework.cloud.servicebroker.service.ServiceInstanceBindingSer
 import org.springframework.stereotype.Service
 
 @Service
-open class InstanceBindingService : ServiceInstanceBindingService {
+open class InstanceBindingService
+constructor(private val config: BrokerConfig): ServiceInstanceBindingService {
 
     companion object {
         val log = LogFactory.getLog(InstanceBindingService::class.java)
     }
 
     override fun deleteServiceInstanceBinding(request: DeleteServiceInstanceBindingRequest) {
-        log.warn(">>> UNBINDING SERVICE INSTANCE")
+        val instanceId = formatInstanceId(request.serviceInstanceId)
+        log.info("unbinding service instance id=$instanceId")
     }
 
     override fun createServiceInstanceBinding(request: CreateServiceInstanceBindingRequest): CreateServiceInstanceBindingResponse {
-        log.warn(">>> BINDING SERVICE INSTANCE")
-        return CreateServiceInstanceBindingResponse()
+        val instanceId = formatInstanceId(request.serviceInstanceId)
+        log.info("binding service instance id=$instanceId")
+        return CreateServiceInstanceAppBindingResponse().withCredentials(mapOf("uri" to "jdbc:hive2://${config.serviceHost}/$instanceId;transportMode=http;httpPath=simple-hive"))
     }
+
+    private fun formatInstanceId(instanceId: String) = instanceId.replace('-', '_')
+
 }

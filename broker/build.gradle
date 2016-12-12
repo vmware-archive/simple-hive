@@ -5,6 +5,7 @@ jar {
 }
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.cloud:spring-cloud-cloudfoundry-service-broker:${springCloudServiceBrokerVersion}")
 	testCompile(group: "org.springframework.cloud", name: "spring-cloud-cloudfoundry-service-broker", version: "${springCloudServiceBrokerVersion}", classifier: "tests")
 }

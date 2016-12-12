@@ -7,8 +7,16 @@ applications:
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
 
 - name: simple-hive-broker
-  memory: 1G
+  memory: 512M
   path: broker/build/libs/simple-hive-broker-0.0.1-SNAPSHOT.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
   env:
     SECURITY_USER_PASSWORD: honey
+    SIMPLE_HIVE_SERVICE_HOST: simple-hive-service.local.pcfdev.io
+
+- name: sample-client
+  memory: 512M
+  path: sample-client/build/libs/sample-client-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
+  services:
+    - hive

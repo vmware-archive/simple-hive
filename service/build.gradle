@@ -5,6 +5,8 @@ jar {
 }
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+
     compile("org.apache.hive:hive-serde:${hiveVersion}")  {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'log4', module: 'slf4j-log4j12'

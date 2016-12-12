@@ -42,8 +42,6 @@ subprojects {
     targetCompatibility = 1.8
 
     dependencies {
-        compile("org.springframework.boot:spring-boot-starter")
-
         compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
         compile("org.apache.hive:hive-jdbc:${hiveVersion}")  {
             exclude group: 'org.slf4j', module: 'slf4j-log4j12'

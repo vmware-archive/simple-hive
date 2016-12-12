@@ -1,1 +1,1 @@
-include 'service', 'broker'
+include 'service', 'broker', 'sample-client'

@@ -1,0 +1,9 @@
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'sample-client'
+}
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web")
+}
