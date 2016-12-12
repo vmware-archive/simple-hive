@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.cloud.servicebroker.model.*
 import org.springframework.cloud.servicebroker.service.ServiceInstanceService
 import org.springframework.stereotype.Service
+import java.sql.Connection
 import java.sql.DriverManager
 
 @Service
@@ -16,29 +17,53 @@ constructor(private val config: BrokerConfig) : ServiceInstanceService {
     }
 
     override fun createServiceInstance(request: CreateServiceInstanceRequest): CreateServiceInstanceResponse {
-        log.warn(">>> CREATING SERVICE INSTANCE")
-        createDb(request.serviceInstanceId.replace('-', '_'))
+        val instanceId = formatInstanceId(request.serviceInstanceId)
+        log.info("creating service instance id=$instanceId")
+        createDb(instanceId)
         return CreateServiceInstanceResponse()
     }
 
-    private fun createDb(serviceInstanceId: String) {
-        val connection = DriverManager.getConnection("jdbc:hive2://${config.serviceHost}/default;transportMode=http;httpPath=simple-hive")
-        connection.createStatement().executeUpdate("CREATE DATABASE $serviceInstanceId")
+    private fun createDb(database: String) {
+        execute { connection ->
+            connection.createStatement().executeUpdate("CREATE DATABASE $database")
+        }
+    }
+
+    override fun updateServiceInstance(request: UpdateServiceInstanceRequest): UpdateServiceInstanceResponse {
+        val instanceId = formatInstanceId(request.serviceInstanceId)
+        log.info("updating service instance id=$instanceId")
+        deleteDb(instanceId)
+        createDb(instanceId)
+        return UpdateServiceInstanceResponse()
     }
 
     override fun getLastOperation(request: GetLastServiceOperationRequest): GetLastServiceOperationResponse {
-        log.warn(">>> GETTING LAST OPERATION")
+        log.info("getting last operation")
         return GetLastServiceOperationResponse().withOperationState(OperationState.SUCCEEDED)
     }
 
     override fun deleteServiceInstance(request: DeleteServiceInstanceRequest): DeleteServiceInstanceResponse {
-        log.warn(">>> DELETING SERVICE INSTANCE")
+        val instanceId = formatInstanceId(request.serviceInstanceId)
+        log.info("deleting service instance id=$instanceId")
+        deleteDb(instanceId)
         return DeleteServiceInstanceResponse()
     }
 
-    override fun updateServiceInstance(request: UpdateServiceInstanceRequest): UpdateServiceInstanceResponse {
-        log.warn(">>> UPDATING SERVICE INSTANCE")
-        return UpdateServiceInstanceResponse()
+    private fun deleteDb(database: String) {
+        execute { connection ->
+            connection.createStatement().executeUpdate("DROP DATABASE IF EXISTS $database CASCADE")
+        }
     }
+
+    private fun execute(action: (Connection) -> Unit) {
+        val connection = DriverManager.getConnection("jdbc:hive2://${config.serviceHost}/default;transportMode=http;httpPath=simple-hive")
+        try {
+            action(connection)
+        } finally {
+            connection.close()
+        }
+    }
+
+    private fun formatInstanceId(instanceId: String) = instanceId.replace('-', '_')
 
 }
