@@ -1,9 +1,9 @@
 buildscript {
-	ext {
-		kotlinVersion = '1.0.5-2'
-		springBootVersion = '1.4.2.RELEASE'
-		assertJVersion = '3.6.1'
-
+    ext {
+        kotlinVersion = '1.0.5-2'
+        springBootVersion = '1.4.2.RELEASE'
+        assertJVersion = '3.6.1'
+        springCloudServiceBrokerVersion = '1.0.0.RELEASE'
         hiveVersion = '1.2.1'
         hsqldbVersion = '2.3.1'
         tezVersion = '0.7.0'
@@ -11,81 +11,47 @@ buildscript {
         datanucleusRdbmsVersion = '3.2.11'
         datanucleusCoreVersion = '3.2.12'
         reflectionsVersion = '0.9.8'
-	}
+    }
 
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-	}
-}
+    repositories {
+        mavenCentral()
+    }
 
-apply plugin: 'kotlin'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-
-jar {
-	baseName = 'simple-hive'
-	version = '0.0.1-SNAPSHOT'
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-	mavenCentral()
-    maven {
-        url "http://conjars.org/repo"
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
     }
 }
 
-dependencies {
-	compile('org.springframework.boot:spring-boot-starter')
-	compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+allprojects {
+    group = 'io.pivotal'
+    version = '0.0.1-SNAPSHOT'
 
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile("org.assertj:assertj-core:${assertJVersion}")
-
-    // TODO: trim these dependencies further
-    compile("org.apache.hive:hive-serde:${hiveVersion}")  {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        exclude group: 'log4', module: 'slf4j-log4j12'
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://conjars.org/repo"
+        }
     }
-    compile("org.apache.hive:hive-jdbc:${hiveVersion}")  {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        exclude group: 'log4', module: 'slf4j-log4j12'
-    }
-    compile("org.apache.hive.hcatalog:hive-webhcat-java-client:${hiveVersion}") {
-        exclude module: "jms", group: "javax.jms"
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        exclude group: 'log4', module: 'slf4j-log4j12'
-    }
-    compile("org.apache.hive:hive-service:${hiveVersion}") {
-        exclude module: 'derby', group: 'org.apache.derby'
-        exclude module: 'datanucleus-api-jdo', group: 'org.datanucleus'
-        exclude module: 'datanucleus-core', group: 'org.datanucleus'
-        exclude module: 'datanucleus-rdbms', group: 'org.datanucleus'
-        exclude module: 'bonecp', group: 'com.jolbox'
-        exclude module: 'calcite-core', group: 'org.apache.calcite'
-        exclude module: 'calcite-avatica', group: 'org.apache.calcite'
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        exclude group: 'log4', module: 'slf4j-log4j12'
-    }
+}
 
-    compile("org.hsqldb:hsqldb:${hsqldbVersion}")
+subprojects {
+    apply plugin: 'kotlin'
 
-    compile("org.apache.tez:tez-dag:${tezVersion}")
-    compile("org.apache.tez:tez-common:${tezVersion}"){
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        exclude group: 'log4', module: 'slf4j-log4j12'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    dependencies {
+        compile("org.springframework.boot:spring-boot-starter")
+
+        compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+        compile("org.apache.hive:hive-jdbc:${hiveVersion}")  {
+            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+            exclude group: 'log4', module: 'slf4j-log4j12'
+            exclude group: 'org.eclipse.jetty.aggregate'
+        }
+
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile("org.assertj:assertj-core:${assertJVersion}")
     }
-    compile("org.apache.tez:tez-mapreduce:${tezVersion}")
-
-    compile("org.datanucleus:datanucleus-api-jdo:${datanucleusApiJdoVersion}")
-    compile("org.datanucleus:datanucleus-core:${datanucleusCoreVersion}")
-    compile("org.datanucleus:datanucleus-rdbms:${datanucleusRdbmsVersion}")
-
-    compile("org.reflections:reflections:${reflectionsVersion}")
 }

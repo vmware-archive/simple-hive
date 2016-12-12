@@ -1,6 +1,14 @@
 ---
 applications:
-- name: simple-hive
-  memory: 1G
-  path: build/libs/simple-hive-0.0.1-SNAPSHOT.jar
 
+- name: simple-hive-service
+  memory: 1G
+  path: service/build/libs/simple-hive-service-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
+
+- name: simple-hive-broker
+  memory: 1G
+  path: broker/build/libs/simple-hive-broker-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
+  env:
+    SECURITY_USER_PASSWORD: honey
