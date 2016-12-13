@@ -13,6 +13,7 @@ applications:
   env:
     SECURITY_USER_PASSWORD: honey
     SIMPLE_HIVE_SERVICE_HOST: simple-hive-service.local.pcfdev.io
+    SIMPLE_HIVE_SERVICE_PORT: 80
 
 - name: sample-client
   memory: 512M

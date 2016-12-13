@@ -2,7 +2,7 @@
 
 set -e -x
 
-./gradlew assemble
+./gradlew clean assemble
 
 cf push simple-hive-service
 
@@ -17,6 +17,16 @@ cf create-service simple-hive default hive
 
 cf push sample-client
 
-beeline \
-    -u "jdbc:hive2://simple-hive-service.local.pcfdev.io/;transportMode=http;httpPath=simple-hive" \
-    -e "show databases;"
+# A Sample Test
+
+curl -XPOST http://sample-client.local.pcfdev.io/Kaveh
+curl -XPOST http://sample-client.local.pcfdev.io/Kaveh
+curl -XPOST http://sample-client.local.pcfdev.io/Max
+
+if ! [ `curl -XGET http://sample-client.local.pcfdev.io/Kaveh` = "2" ]; then
+   exit 1
+fi
+
+if ! [ `curl -XGET http://sample-client.local.pcfdev.io/Max` = "1" ]; then
+   exit 1
+fi

@@ -1,6 +1,6 @@
 package io.pivotal.broker.service
 
-import io.pivotal.broker.config.BrokerConfig
+import io.pivotal.broker.config.ServiceConfig
 import org.apache.commons.logging.LogFactory
 import org.springframework.cloud.servicebroker.model.*
 import org.springframework.cloud.servicebroker.service.ServiceInstanceService
@@ -10,7 +10,7 @@ import java.sql.DriverManager
 
 @Service
 open class InstanceService
-constructor(private val config: BrokerConfig) : ServiceInstanceService {
+constructor(private val config: ServiceConfig) : ServiceInstanceService {
 
     companion object {
         val log = LogFactory.getLog(InstanceService::class.java)
@@ -56,7 +56,7 @@ constructor(private val config: BrokerConfig) : ServiceInstanceService {
     }
 
     private fun execute(action: (Connection) -> Unit) {
-        val connection = DriverManager.getConnection("jdbc:hive2://${config.serviceHost}/default;transportMode=http;httpPath=simple-hive")
+        val connection = DriverManager.getConnection("jdbc:hive2://${config.host}/default;transportMode=http;httpPath=simple-hive")
         try {
             action(connection)
         } finally {

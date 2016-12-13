@@ -24,7 +24,7 @@ open class CatalogConfig {
                                         "default",
                                         "This is a default plan. All service are created equally.",
                                         getPlanMetadata())),
-                        listOf("tag-1", "tag-2"),
+                        listOf("hive"),
                         getServiceDefinitionMetadata(),
                         null,
                         null))

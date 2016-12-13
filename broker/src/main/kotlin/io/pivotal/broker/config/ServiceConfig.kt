@@ -4,7 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
 
 @Component
-@ConfigurationProperties(prefix = "simple.hive")
-class BrokerConfig {
-    lateinit var serviceHost: String
+@ConfigurationProperties(prefix = "simple.hive.service")
+class ServiceConfig {
+    lateinit var host: String
+    lateinit var port: String
 }

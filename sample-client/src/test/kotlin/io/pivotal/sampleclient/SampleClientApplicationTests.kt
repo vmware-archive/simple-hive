@@ -12,5 +12,4 @@ class SampleClientApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

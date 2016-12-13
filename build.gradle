@@ -4,6 +4,7 @@ buildscript {
         springBootVersion = '1.4.2.RELEASE'
         assertJVersion = '3.6.1'
         springCloudServiceBrokerVersion = '1.0.0.RELEASE'
+        cloudConnectorVersion = '1.2.3.RELEASE'
         hiveVersion = '1.2.1'
         hsqldbVersion = '2.3.1'
         tezVersion = '0.7.0'

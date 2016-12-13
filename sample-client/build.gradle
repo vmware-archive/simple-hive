@@ -6,4 +6,7 @@ jar {
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.cloud:spring-cloud-cloudfoundry-connector:${cloudConnectorVersion}")
+    compile("org.springframework.cloud:spring-cloud-spring-service-connector:${cloudConnectorVersion}")
 }
