@@ -1,14 +1,12 @@
 package io.pivotal.simplehive
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
-import org.junit.Before
+import org.datanucleus.store.rdbms.datasource.DriverManagerDataSource
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.junit4.SpringRunner
-import java.sql.Connection
-import java.sql.DriverManager
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
@@ -16,19 +14,17 @@ class SimpleHiveApplicationTests {
     companion object {
         val testDatabase = "test_db"
         val testTable = "$testDatabase.test_table"
-        val simpleHiveHost = "localhost:8080"
-    }
 
-    lateinit var connection: Connection
+        val driver = "org.apache.hive.jdbc.HiveDriver"
+        val url = "jdbc:hive2://localhost:8080/default;transportMode=http;httpPath=simple-hive"
 
-    @Before
-    fun setup() {
-        connection = DriverManager.getConnection("jdbc:hive2://$simpleHiveHost/default;transportMode=http;httpPath=simple-hive")
-    }
-
-    @After
-    fun cleanup() {
-        connection.close()
+        val jdbcTemplate = JdbcTemplate(DriverManagerDataSource(
+                driver,
+                url,
+                null,
+                null,
+                null,
+                null))
     }
 
     @Test
@@ -44,26 +40,23 @@ class SimpleHiveApplicationTests {
     }
 
     private fun thenDataCanBeRetrieved(records: List<Pair<String, Int>>) {
-        val resultSet = connection.createStatement().executeQuery("select * from $testTable order by value")
+        val result = jdbcTemplate.query("SELECT * FROM $testTable ORDER BY VALUE") { rs, n ->
 
-        records.forEach {
-            assertThat(resultSet.next()).isTrue()
-            assertThat(resultSet.getString("key")).isEqualTo(it.first)
-            assertThat(resultSet.getInt("value")).isEqualTo(it.second)
+            Pair(rs.getString("key"), rs.getInt("value"))
         }
 
-        assertThat(resultSet.next()).isFalse()
+        assertThat(result).isEqualTo(records)
     }
 
     private fun whenDataIsInserted(records: List<Pair<String, Int>>) {
         records.forEach {
-            connection.createStatement().executeUpdate("insert into $testTable values ('${it.first}', ${it.second})")
+            jdbcTemplate.update("INSERT INTO $testTable VALUES ('${it.first}', ${it.second})")
         }
     }
 
     private fun givenTestDatabaseExists() {
-        connection.createStatement().executeUpdate("DROP DATABASE IF EXISTS $testDatabase CASCADE")
-        connection.createStatement().executeUpdate("CREATE DATABASE $testDatabase")
-        connection.createStatement().executeUpdate("CREATE TABLE $testTable (key STRING, value INT)")
+        jdbcTemplate.update("DROP DATABASE IF EXISTS $testDatabase CASCADE")
+        jdbcTemplate.update("CREATE DATABASE $testDatabase")
+        jdbcTemplate.update("CREATE TABLE $testTable (key STRING, value INT)")
     }
 }

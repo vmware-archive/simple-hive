@@ -42,4 +42,6 @@ dependencies {
     compile("org.datanucleus:datanucleus-rdbms:${datanucleusRdbmsVersion}")
 
     compile("org.reflections:reflections:${reflectionsVersion}")
+
+    testCompile("org.springframework.boot:spring-boot-starter-jdbc")
 }
