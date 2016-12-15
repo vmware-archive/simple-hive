@@ -1,11 +1,15 @@
-package io.pivotal.simplehive
+package io.pivotal.simplehive.config
 
+import io.pivotal.simplehive.HiveFileSystem
+import io.pivotal.simplehive.config.ServiceConfig
 import org.apache.hadoop.hive.conf.HiveConf
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars
 import org.hsqldb.jdbc.JDBCDriver
 import java.util.*
 
-class Config(val hiveFileSystem: HiveFileSystem) {
+class HiveConfig(private val hiveFileSystem: HiveFileSystem,
+                 private val serviceConfig: ServiceConfig) {
+
     private val hiveConf = HiveConf()
 
     fun build(): HiveConf = this.hiveConf.configure()
@@ -24,8 +28,8 @@ class Config(val hiveFileSystem: HiveFileSystem) {
 
     private fun HiveConf.configureTransportMode(): HiveConf {
         setVar(ConfVars.HIVE_SERVER2_TRANSPORT_MODE, "http")
-        setIntVar(ConfVars.HIVE_SERVER2_THRIFT_HTTP_PORT, 8080)
-        setVar(ConfVars.HIVE_SERVER2_THRIFT_HTTP_PATH, "simple-hive")
+        setIntVar(ConfVars.HIVE_SERVER2_THRIFT_HTTP_PORT, serviceConfig.port.toInt())
+        setVar(ConfVars.HIVE_SERVER2_THRIFT_HTTP_PATH, serviceConfig.httpPath)
 
         return this
     }
@@ -85,7 +89,7 @@ class Config(val hiveFileSystem: HiveFileSystem) {
     }
 
     private fun HiveConf.configureSupportConcurrency(): HiveConf {
-        this.setBoolVar(ConfVars.HIVE_SUPPORT_CONCURRENCY, false)
+        this.setBoolVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_SUPPORT_CONCURRENCY, false)
         return this
     }
 
@@ -111,16 +115,16 @@ class Config(val hiveFileSystem: HiveFileSystem) {
     private fun HiveConf.configureFileSystem(): HiveConf {
         val metaStorageUrl = "jdbc:hsqldb:mem:" + UUID.randomUUID().toString()
 
-        this.setVar(ConfVars.METASTORECONNECTURLKEY, metaStorageUrl + ";create=true")
-        this.setBoolVar(ConfVars.HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS, true)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.METASTORECONNECTURLKEY, metaStorageUrl + ";create=true")
+        this.setBoolVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS, true)
 
-        this.setVar(ConfVars.HIVE_JAR_DIRECTORY, hiveFileSystem.tezInstallation)
-        this.setVar(ConfVars.HIVE_USER_INSTALL_DIR, hiveFileSystem.tezInstallation)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_JAR_DIRECTORY, hiveFileSystem.tezInstallation)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_USER_INSTALL_DIR, hiveFileSystem.tezInstallation)
 
-        this.setVar(ConfVars.METASTOREWAREHOUSE, hiveFileSystem.warehouse)
-        this.setVar(ConfVars.SCRATCHDIR, hiveFileSystem.scratch)
-        this.setVar(ConfVars.LOCALSCRATCHDIR, hiveFileSystem.localScratch)
-        this.setVar(ConfVars.HIVEHISTORYFILELOC, hiveFileSystem.history)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.METASTOREWAREHOUSE, hiveFileSystem.warehouse)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.SCRATCHDIR, hiveFileSystem.scratch)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.LOCALSCRATCHDIR, hiveFileSystem.localScratch)
+        this.setVar(org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVEHISTORYFILELOC, hiveFileSystem.history)
         this.set("hadoop.tmp.dir", hiveFileSystem.hadoopTmp)
         this.set("test.log.dir", hiveFileSystem.testLogs)
 

@@ -8,6 +8,8 @@ applications:
   env:
     SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
     SIMPLE_HIVE_SERVICE_ADMIN_PASSWORD: secret-admin-password
+    SIMPLE_HIVE_SERVICE_PORT: 8080
+    SIMPLE_HIVE_SERVICE_HTTP_PATH: simple-hive
 
 - name: simple-hive-broker
   memory: 512M

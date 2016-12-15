@@ -1,4 +1,4 @@
-package io.pivotal.simplehive
+package io.pivotal.simplehive.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

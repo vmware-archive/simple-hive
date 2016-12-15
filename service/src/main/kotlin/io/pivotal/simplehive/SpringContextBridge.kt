@@ -1,5 +1,6 @@
 package io.pivotal.simplehive
 
+import io.pivotal.simplehive.config.AdminConfig
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
