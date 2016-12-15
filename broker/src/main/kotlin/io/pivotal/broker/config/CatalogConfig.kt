@@ -14,16 +14,18 @@ open class CatalogConfig {
     open fun catalog(): Catalog {
         return Catalog(Collections.singletonList(
                 ServiceDefinition(
-                        "simple-hive-service-broker",
                         "simple-hive",
-                        "A simple hive service broker implementation",
+                        "simple-hive",
+                        "A simple Hive service",
                         true,
                         false,
                         listOf(
-                                Plan("simple-hive-plan",
+                                Plan(
+                                        "simple-hive-plan",
                                         "default",
-                                        "This is a default plan. All service are created equally.",
-                                        getPlanMetadata())),
+                                        "This is the default plan.",
+                                        getPlanMetadata(),
+                                        true)),
                         listOf("hive"),
                         getServiceDefinitionMetadata(),
                         null,
@@ -31,39 +33,24 @@ open class CatalogConfig {
         )
     }
 
-    private fun getServiceDefinitionMetadata(): Map<String, Any> {
-        return HashMap()
-//        sdMetadata.put("displayName", "MongoDB")
-//        sdMetadata.put("imageUrl", "http://info.mongodb.com/rs/mongodb/images/MongoDB_Logo_Full.png")
-//        sdMetadata.put("longDescription", "MongoDB Service")
-//        sdMetadata.put("providerDisplayName", "Pivotal")
-//        sdMetadata.put("documentationUrl", "https://github.com/spring-cloud-samples/cloudfoundry-mongodb-service-broker")
-//        sdMetadata.put("supportUrl", "https://github.com/spring-cloud-samples/cloudfoundry-mongodb-service-broker")
-//        return sdMetadata
-    }
+    private fun getServiceDefinitionMetadata() = mapOf(
+            "displayName" to "Simple Hive",
+            "longDescription" to "A simple Hive service",
+            "providerDisplayName" to "Pivotal",
+            "documentationUrl" to "https://github.com/pivotal/simple-hive",
+            "supportUrl" to "https://github.com/pivotal/simple-hive",
+            "imageUrl" to "https://docs.google.com/drawings/d/1oxi8BlLNEbHX0-vTDHRrdu1fgh55Q7FkP8uq66YA51A/pub?w=960&h=720")
 
-    private fun getPlanMetadata(): Map<String, Any> {
-        val planMetadata = HashMap<String, Any>()
-        planMetadata.put("costs", getCosts())
-        planMetadata.put("bullets", getBullets())
-        return planMetadata
-    }
+    private fun getPlanMetadata() = mapOf(
+            "costs" to getCosts(),
+            "bullets" to getBullets())
 
-    private fun getCosts(): List<Map<String, Any>> {
-        val costsMap = HashMap<String, Any>()
+    private fun getCosts() = listOf(mapOf(
+            "unit" to "MONTHLY",
+            "amount" to mapOf("usd" to 0)))
 
-        val amount = HashMap<String, Any>()
-        amount.put("usd", 0.0)
-
-        costsMap.put("amount", amount)
-        costsMap.put("unit", "MONTHLY")
-
-        return Collections.singletonList(costsMap)
-    }
-
-    private fun getBullets(): List<String> {
-        return Arrays.asList("Shared MongoDB server",
-                "100 MB Storage (not enforced)",
-                "40 concurrent connections (not enforced)")
-    }
+    private fun getBullets() = listOf(
+            "Shared Simple Hive Server",
+            "Stores data in locally (container)",
+            "Data to be considered volatile")
 }
