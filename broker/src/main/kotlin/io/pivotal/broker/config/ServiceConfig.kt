@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 class ServiceConfig {
     lateinit var host: String
     lateinit var port: String
+    lateinit var httpPath: String
     val admin: Admin = Admin()
 
     class Admin {

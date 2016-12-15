@@ -1,19 +1,18 @@
 package io.pivotal.broker.service
 
-import io.pivotal.broker.config.ServiceConfig
+import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.cloud.servicebroker.model.*
 import org.springframework.cloud.servicebroker.service.ServiceInstanceService
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
-import java.sql.Connection
-import java.sql.DriverManager
 
 @Service
 open class InstanceService
-constructor(private val config: ServiceConfig) : ServiceInstanceService {
+constructor(private val jdbcTemplate: JdbcTemplate) : ServiceInstanceService {
 
     companion object {
-        val log = LogFactory.getLog(InstanceService::class.java)
+        val log: Log = LogFactory.getLog(InstanceService::class.java)
     }
 
     override fun createServiceInstance(request: CreateServiceInstanceRequest): CreateServiceInstanceResponse {
@@ -24,9 +23,7 @@ constructor(private val config: ServiceConfig) : ServiceInstanceService {
     }
 
     private fun createDb(database: String) {
-        execute { connection ->
-            connection.createStatement().executeUpdate("CREATE DATABASE $database")
-        }
+        jdbcTemplate.update("CREATE DATABASE $database")
     }
 
     override fun updateServiceInstance(request: UpdateServiceInstanceRequest): UpdateServiceInstanceResponse {
@@ -50,21 +47,7 @@ constructor(private val config: ServiceConfig) : ServiceInstanceService {
     }
 
     private fun deleteDb(database: String) {
-        execute { connection ->
-            connection.createStatement().executeUpdate("DROP DATABASE IF EXISTS $database CASCADE")
-        }
-    }
-
-    private fun execute(action: (Connection) -> Unit) {
-        val connection = DriverManager.getConnection(
-                "jdbc:hive2://${config.host}/default;transportMode=http;httpPath=simple-hive",
-                config.admin.username,
-                config.admin.password)
-        try {
-            action(connection)
-        } finally {
-            connection.close()
-        }
+        jdbcTemplate.update("DROP DATABASE IF EXISTS $database CASCADE")
     }
 
     private fun formatInstanceId(instanceId: String) = instanceId.replace('-', '_')

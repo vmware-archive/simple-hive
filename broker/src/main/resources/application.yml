@@ -1,2 +1,8 @@
-simple.hive:
-  service.host: simple-hive-service.local.pcfdev.io
+simple.hive.service.host: localhost
+simple.hive.service.port: 8080
+simple.hive.service.httpPath: simple-hive
+spring.datasource:
+  url: "jdbc:hive2://${simple.hive.service.host}:${simple.hive.service.port}/default;transportMode=http;httpPath=${simple.hive.service.httpPath}"
+  driver-class-name: "org.apache.hive.jdbc.HiveDriver"
+  username: ${simple.hive.service.admin.username}
+  password: ${simple.hive.service.admin.password}

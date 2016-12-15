@@ -17,6 +17,7 @@ applications:
     SECURITY_USER_PASSWORD: honey
     SIMPLE_HIVE_SERVICE_HOST: simple-hive-service.local.pcfdev.io
     SIMPLE_HIVE_SERVICE_PORT: 80
+    SIMPLE_HIVE_SERVICE_HTTP_PATH: simple-hive
     SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
     SIMPLE_HIVE_SERVICE_ADMIN_PASSWORD: secret-admin-password
 
