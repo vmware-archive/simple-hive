@@ -12,6 +12,7 @@ class Config(val hiveFileSystem: HiveFileSystem) {
 
     private fun HiveConf.configure(): HiveConf =
             this.configureMiscHiveSettings()
+                    .configureAuth()
                     .configureTransportMode()
                     .configureMetaStore()
                     .configureMrExecutionEngine()
@@ -26,6 +27,12 @@ class Config(val hiveFileSystem: HiveFileSystem) {
         setIntVar(ConfVars.HIVE_SERVER2_THRIFT_HTTP_PORT, 8080)
         setVar(ConfVars.HIVE_SERVER2_THRIFT_HTTP_PATH, "simple-hive")
 
+        return this
+    }
+
+    private fun HiveConf.configureAuth(): HiveConf {
+        setVar(ConfVars.HIVE_SERVER2_AUTHENTICATION, "CUSTOM")
+        setVar(ConfVars.HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS, "io.pivotal.simplehive.Authenticator")
         return this
     }
 

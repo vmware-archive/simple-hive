@@ -17,6 +17,8 @@ constructor(private val config: ServiceConfig) : ServiceInstanceBindingService {
         val log = LogFactory.getLog(InstanceBindingService::class.java)
         val httpPath = "simple-hive"
         val transportMode = "http"
+        val username = "hive-user"
+        val password = "hive-password"
     }
 
     override fun deleteServiceInstanceBinding(request: DeleteServiceInstanceBindingRequest) {
@@ -27,8 +29,6 @@ constructor(private val config: ServiceConfig) : ServiceInstanceBindingService {
     override fun createServiceInstanceBinding(request: CreateServiceInstanceBindingRequest): CreateServiceInstanceBindingResponse {
         val instanceId = formatInstanceId(request.serviceInstanceId)
         log.info("binding service instance id=$instanceId")
-        val username = "alfred"
-        val password = "secret"
         return CreateServiceInstanceAppBindingResponse().withCredentials(
                 mapOf("uri" to formatUri(instanceId, password, username)))
     }

@@ -56,7 +56,7 @@ constructor(private val config: ServiceConfig) : ServiceInstanceService {
     }
 
     private fun execute(action: (Connection) -> Unit) {
-        val connection = DriverManager.getConnection("jdbc:hive2://${config.host}/default;transportMode=http;httpPath=simple-hive")
+        val connection = DriverManager.getConnection("jdbc:hive2://${config.host}/default;transportMode=http;httpPath=simple-hive", "hive-user", "hive-password")
         try {
             action(connection)
         } finally {

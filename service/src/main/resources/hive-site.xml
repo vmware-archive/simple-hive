@@ -1,0 +1,6 @@
+<configuration>
+    <property>
+        <name>hive.server2.custom.authentication.class</name>
+        <value>io.pivotal.simplehive.Authenticator</value>
+    </property>
+</configuration>

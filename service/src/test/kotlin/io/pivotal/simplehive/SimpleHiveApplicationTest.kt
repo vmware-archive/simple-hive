@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class SimpleHiveApplicationTests {
+class SimpleHiveApplicationTest {
     companion object {
         val testDatabase = "test_db"
         val testTable = "$testDatabase.test_table"
@@ -21,8 +21,8 @@ class SimpleHiveApplicationTests {
         val jdbcTemplate = JdbcTemplate(DriverManagerDataSource(
                 driver,
                 url,
-                null,
-                null,
+                "hive-user",
+                "hive-password",
                 null,
                 null))
     }
@@ -37,6 +37,19 @@ class SimpleHiveApplicationTests {
         whenDataIsInserted(records)
 
         thenDataCanBeRetrieved(records)
+    }
+
+    @Test(expected = Exception::class)
+    fun `should forbid access if unauthenticated`() {
+
+        val jdbcTemplate = JdbcTemplate(DriverManagerDataSource(
+                driver,
+                url,
+                "unauthenticated-user",
+                "wrong-password",
+                null,
+                null))
+        jdbcTemplate.queryForObject("SELECT 1", Int::class.java)
     }
 
     private fun thenDataCanBeRetrieved(records: List<Pair<String, Int>>) {
