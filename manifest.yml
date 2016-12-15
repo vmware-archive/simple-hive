@@ -5,6 +5,9 @@ applications:
   memory: 1G
   path: service/build/libs/simple-hive-service-0.0.1-SNAPSHOT.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
+  env:
+    SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
+    SIMPLE_HIVE_SERVICE_ADMIN_PASSWORD: secret-admin-password
 
 - name: simple-hive-broker
   memory: 512M
@@ -14,6 +17,8 @@ applications:
     SECURITY_USER_PASSWORD: honey
     SIMPLE_HIVE_SERVICE_HOST: simple-hive-service.local.pcfdev.io
     SIMPLE_HIVE_SERVICE_PORT: 80
+    SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
+    SIMPLE_HIVE_SERVICE_ADMIN_PASSWORD: secret-admin-password
 
 - name: sample-client
   memory: 512M

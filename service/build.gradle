@@ -43,5 +43,5 @@ dependencies {
 
     compile("org.reflections:reflections:${reflectionsVersion}")
 
-    testCompile("org.springframework.boot:spring-boot-starter-jdbc")
+    testCompile("org.springframework:spring-jdbc:${springJdbcVersion}")
 }

@@ -6,7 +6,9 @@ import javax.security.sasl.AuthenticationException
 class Authenticator : PasswdAuthenticationProvider {
 
     override fun Authenticate(user: String?, password: String?) {
-        if("hive-user" != user || "hive-password" != password) {
+        val adminConfig = SpringContextBridge.springContextBridge().adminConfig
+
+        if (user != adminConfig.username || password != adminConfig.password) {
             throw AuthenticationException()
         }
     }

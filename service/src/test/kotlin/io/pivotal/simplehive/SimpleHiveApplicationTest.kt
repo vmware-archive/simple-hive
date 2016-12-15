@@ -6,10 +6,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
+@TestPropertySource(properties = arrayOf(
+        "simple.hive.admin.username=test-admin",
+        "simple.hive.admin.password=test-admin-password"))
 class SimpleHiveApplicationTest {
     companion object {
         val testDatabase = "test_db"
@@ -21,8 +25,8 @@ class SimpleHiveApplicationTest {
         val jdbcTemplate = JdbcTemplate(DriverManagerDataSource(
                 driver,
                 url,
-                "hive-user",
-                "hive-password",
+                "test-admin",
+                "test-admin-password",
                 null,
                 null))
     }

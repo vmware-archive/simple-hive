@@ -1,7 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 jar {
-	baseName = 'sample-client'
+    baseName = 'sample-client'
 }
 
 dependencies {

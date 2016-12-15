@@ -17,8 +17,6 @@ constructor(private val config: ServiceConfig) : ServiceInstanceBindingService {
         val log = LogFactory.getLog(InstanceBindingService::class.java)
         val httpPath = "simple-hive"
         val transportMode = "http"
-        val username = "hive-user"
-        val password = "hive-password"
     }
 
     override fun deleteServiceInstanceBinding(request: DeleteServiceInstanceBindingRequest) {
@@ -30,11 +28,11 @@ constructor(private val config: ServiceConfig) : ServiceInstanceBindingService {
         val instanceId = formatInstanceId(request.serviceInstanceId)
         log.info("binding service instance id=$instanceId")
         return CreateServiceInstanceAppBindingResponse().withCredentials(
-                mapOf("uri" to formatUri(instanceId, password, username)))
+                mapOf("uri" to formatUri(instanceId)))
     }
 
-    private fun formatUri(instanceId: String, password: String, username: String) =
-            "hive2://$username:$password@${config.host}:${config.port}/$instanceId;transportMode=$transportMode;httpPath=$httpPath"
+    private fun formatUri(instanceId: String) =
+            "hive2://${config.admin.username}:${config.admin.password}@${config.host}:${config.port}/$instanceId;transportMode=$transportMode;httpPath=$httpPath"
 
     private fun formatInstanceId(instanceId: String) = instanceId.replace('-', '_')
 
