@@ -21,7 +21,11 @@ assert() {
     fi
 }
 
-SAMPLE_CLIENT=sample-client.local.pcfdev.io
+clientHost() {
+    echo `cf app sample-client | grep urls | cut -d " " -f 2`
+}
+
+SAMPLE_CLIENT=$(clientHost)
 
 PLAYER_ONE=$RANDOM
 PLAYER_TWO=$RANDOM

@@ -2,8 +2,8 @@
 
 set -e -x
 
-./deploy-service.sh
-./deploy-broker.sh
-./deploy-sample-client.sh
+./service/deploy.sh
 
-./test.sh
+./broker/deploy.sh
+
+./sample-client/deploy.sh
