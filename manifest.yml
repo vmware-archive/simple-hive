@@ -16,7 +16,6 @@ applications:
   path: broker/build/libs/simple-hive-broker-0.0.1-SNAPSHOT.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
   env:
-    SECURITY_USER_PASSWORD: honey
     SIMPLE_HIVE_SERVICE_HTTP_PATH: simple-hive
     SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
     SIMPLE_HIVE_SERVICE_ADMIN_PASSWORD: secret-admin-password
