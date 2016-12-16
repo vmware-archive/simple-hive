@@ -27,6 +27,12 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'log4', module: 'slf4j-log4j12'
     }
+    compile("org.apache.hive:hive-jdbc:${hiveVersion}") {
+        exclude group: 'org.apache.derby', module: 'derby'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'log4', module: 'slf4j-log4j12'
+        exclude group: 'org.eclipse.jetty.aggregate'
+    }
 
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
 

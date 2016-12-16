@@ -1,1 +1,1 @@
-include 'service', 'broker', 'sample-client'
+include 'service', 'broker', 'hive-connector', 'sample-client'

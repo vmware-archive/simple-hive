@@ -45,12 +45,6 @@ subprojects {
 
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
-        compile("org.apache.hive:hive-jdbc:${hiveVersion}") {
-            exclude group: 'org.apache.derby', module: 'derby'
-            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-            exclude group: 'log4', module: 'slf4j-log4j12'
-            exclude group: 'org.eclipse.jetty.aggregate'
-        }
 
         testCompile('org.springframework.boot:spring-boot-starter-test')
         testCompile("org.assertj:assertj-core:${assertJVersion}")

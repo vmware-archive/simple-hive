@@ -1,17 +1,16 @@
-package io.pivotal.sampleclient.cloudconnector
+package io.pivotal.cloud.hive
 
 import org.springframework.cloud.service.relational.DataSourceCreator
 
 class HiveDataSourceCreator :
         DataSourceCreator<HiveServiceInfo>(
                 "spring-cloud.hive.driver",
-                HiveDataSourceCreator.DRIVERS,
-                HiveDataSourceCreator.VALIDATION_QUERY) {
+                DRIVERS,
+                VALIDATION_QUERY) {
 
     companion object {
-        val DRIVERS = arrayOf("io.pivotal.sampleclient.cloudconnector.HiveDriverDelegator")
+        val DRIVERS = arrayOf("io.pivotal.cloud.hive.HiveDriverDelegator")
 
         val VALIDATION_QUERY = "SELECT 1"
     }
-
 }

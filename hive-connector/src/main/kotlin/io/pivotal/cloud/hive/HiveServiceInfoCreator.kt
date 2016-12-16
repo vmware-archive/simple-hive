@@ -1,4 +1,4 @@
-package io.pivotal.sampleclient.cloudconnector
+package io.pivotal.cloud.hive
 
 import org.springframework.cloud.cloudfoundry.RelationalServiceInfoCreator
 import org.springframework.cloud.cloudfoundry.Tags

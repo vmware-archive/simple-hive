@@ -1,4 +1,4 @@
-package io.pivotal.sampleclient.cloudconnector
+package io.pivotal.cloud.hive
 
 import org.apache.hive.jdbc.HiveDriver
 import java.sql.Connection

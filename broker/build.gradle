@@ -8,5 +8,13 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework:spring-jdbc:${springJdbcVersion}")
     compile("org.springframework.cloud:spring-cloud-cloudfoundry-service-broker:${springCloudServiceBrokerVersion}")
-	testCompile(group: "org.springframework.cloud", name: "spring-cloud-cloudfoundry-service-broker", version: "${springCloudServiceBrokerVersion}", classifier: "tests")
+
+    compile("org.apache.hive:hive-jdbc:${hiveVersion}") {
+        exclude group: 'org.apache.derby', module: 'derby'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'log4', module: 'slf4j-log4j12'
+        exclude group: 'org.eclipse.jetty.aggregate'
+    }
+
+    testCompile(group: "org.springframework.cloud", name: "spring-cloud-cloudfoundry-service-broker", version: "${springCloudServiceBrokerVersion}", classifier: "tests")
 }
