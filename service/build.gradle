@@ -18,12 +18,6 @@ dependencies {
     }
     compile("org.apache.hive:hive-service:${hiveVersion}") {
         exclude module: 'derby', group: 'org.apache.derby'
-        exclude module: 'datanucleus-api-jdo', group: 'org.datanucleus'
-        exclude module: 'datanucleus-core', group: 'org.datanucleus'
-        exclude module: 'datanucleus-rdbms', group: 'org.datanucleus'
-        exclude module: 'bonecp', group: 'com.jolbox'
-        exclude module: 'calcite-core', group: 'org.apache.calcite'
-        exclude module: 'calcite-avatica', group: 'org.apache.calcite'
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'log4', module: 'slf4j-log4j12'
     }
@@ -42,10 +36,6 @@ dependencies {
         exclude group: 'log4', module: 'slf4j-log4j12'
     }
     compile("org.apache.tez:tez-mapreduce:${tezVersion}")
-
-    compile("org.datanucleus:datanucleus-api-jdo:${datanucleusApiJdoVersion}")
-    compile("org.datanucleus:datanucleus-core:${datanucleusCoreVersion}")
-    compile("org.datanucleus:datanucleus-rdbms:${datanucleusRdbmsVersion}")
 
     compile("org.reflections:reflections:${reflectionsVersion}")
 

@@ -1,3 +1,6 @@
-simple.hive.service.admin:
-  username: admin
-  password: admin
+simple.hive.service:
+  port: 8080
+  httpPath: simple-hive
+  admin:
+    username: admin
+    password: admin

@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner
 @RunWith(SpringRunner::class)
 @SpringBootTest
 @TestPropertySource(properties = arrayOf(
-        "simple.hive.admin.username=test-admin",
-        "simple.hive.admin.password=test-admin-password"))
+        "simple.hive.service.admin.username=test-admin",
+        "simple.hive.service.admin.password=test-admin-password"))
 class SimpleHiveApplicationTest {
     companion object {
         val testDatabase = "test_db"
