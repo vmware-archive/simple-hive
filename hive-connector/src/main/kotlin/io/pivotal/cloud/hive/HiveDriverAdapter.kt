@@ -7,11 +7,15 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.util.*
 
-class HiveDriverDelegator : Driver by driver {
+/**
+ * Since Hive jdbc driver {@code org.apache.hive.jdbc.HiveDriver} is not able to extract the username and password from jdbc URL,
+ * this class acts as adapter to extract those information and provide them explicitly.
+ */
+class HiveDriverAdapter : Driver by driver {
     companion object {
         init {
             try {
-                DriverManager.registerDriver(HiveDriverDelegator())
+                DriverManager.registerDriver(HiveDriverAdapter())
             } catch (e: SQLException) {
                 e.printStackTrace()
             }

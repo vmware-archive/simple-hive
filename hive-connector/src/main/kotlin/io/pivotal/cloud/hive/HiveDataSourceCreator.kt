@@ -9,7 +9,7 @@ class HiveDataSourceCreator :
                 VALIDATION_QUERY) {
 
     companion object {
-        val DRIVERS = arrayOf("io.pivotal.cloud.hive.HiveDriverDelegator")
+        val DRIVERS = arrayOf("io.pivotal.cloud.hive.HiveDriverAdapter")
 
         val VALIDATION_QUERY = "SELECT 1"
     }
