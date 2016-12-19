@@ -2,51 +2,53 @@
 
 ![simple-hive-logo](https://docs.google.com/drawings/d/1oxi8BlLNEbHX0-vTDHRrdu1fgh55Q7FkP8uq66YA51A/pub?h=100)
 
-This is a _simple_ Hive as a service for Cloud Foundry. The service broker is included. It is _simple_
-because it is meant for client development and testing. It neither has authentication, nor authorization
+This is a _simple_ Hive as a service for Cloud Foundry(CF).
+
+It's _simple_ because it is meant for client development and testing. It neither has authentication, nor authorization
 and data will be gone after restarting the service.
 
-On top of that it serves as an example for leveraging Cloud Foundry's concept of services and their brokers.
+It's also a brief introduction to CF's concept of services and their brokers.
+
+This is for you if you find yourself in either of these situations:
+
+> "I am developing an application and it depends on Hive. What now?"
+
+> "Somebody mentioned _CF_, _services_ and _brokers_ and I didn't get it"
+
+The intention of _Simple Hive_ is to solve both. Firstly, it satisfies the need for an easy-to-run 
+Hive service. Secondly, it explores how CF services and brokers can be leveraged. We've
+learned a thing or two about CF and want to share.
+
+We've had fun doing this in Kotlin.
 
 Disclaimer:
  * this is not production-grade software
  * the service instance is not secured
 
 ## What you will find inside
-We've created three applications:
+We've created four modules:
  * a simple Hive service implementation
  * a service broker
  * a [Spring cloud connector](http://cloud.spring.io/spring-cloud-connectors/spring-cloud-connectors.html) for Simple Hive
  * a sample client which showcases the broker, service and connector in action
- 
-They come together to fulfill help in these situations: 
-> "I am developing an application and it depends on Hive. What now?"
-
-> "Somebody mentioned _Cloud Foundry_, _services_ and _brokers_ and I didn't get it"
-
-The intention of _Simple Hive_ is to solve both. Firstly, it satisfies the need for an easy-to-run 
-Hive service. Secondly, it explores how Cloud Foundry services and brokers can be leveraged. We've
-learned a thing or two about Cloud Foundry and want to share.
-
-Lastly, we've had fun doing this in Kotlin.
 
 ## (Simple) Hive
 
 To put it in nutshell, [Apache Hive](https://hive.apache.org/) provides an SQL-like interface to your Hadoop store.
 Usually, the required infrastructure is a little involved. You need to configure Hadoop, etc. This is where _Simple Hive_ steps in.
-It abstracts all dependencies into a single runnable Spring-Boot application. All data is stored in a
-local directory and in-memory database. That means that all data is lost once the app is restarted. This is
-not necessarily in agreement with [Cloud Foundry's consideration for cloud-native applications](https://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html#filesystem).
+It abstracts all dependencies into a single runnable Spring-Boot application which can be simply deployed to any CF. 
+All data stored in a local directory and in-memory database. That means that all data is lost once the app is restarted. This is
+not necessarily in agreement with [CF's consideration for cloud-native applications](https://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html#filesystem).
 But it just works and keeps things simple.
 
 Simple Hive is using _Hive 1.2.1_.
 
-## Cloud Foundry services and brokers
+## CF services and brokers
 
 Let's say your app depends on a service(a database for instance). You could deploy and configure that service yourself.
-However, that can be tedious and error-prone. Cloud Foundry can do the heavy-lifting for you. It provides the concept
+However, that can be tedious and error-prone. CF can do the heavy-lifting for you. It provides the concept
 of _services_(things apps can depend on) and _service brokers_(things that manage these services for you). All that is
-left to the application developer is to inform Cloud Foundry about its dependencies. The provisioning of instances
+left to the application developer is to inform CF about its dependencies. The provisioning of instances
 and the wiring up is taken care of.
 
 In our case, Simple Hive is the service we are depending on. We also want a broker to manage instances of it for our
@@ -65,11 +67,11 @@ It has two responsibilities:
 At the time of writing, interestingly enough, the _service broker API_ is about [to be standardized](https://www.openservicebrokerapi.org/).
 See another example of a service broker [here](https://github.com/spring-cloud-samples/cloudfoundry-service-broker/tree/master/src/main/java/org/springframework/cloud/servicebroker/mongodb).
 Furthermore, it is worth pointing out that the service broker is a very powerful abstraction. It is certainly not limited
-to the case of databases. For example, it could just as well manage test accounts in your payment providers sandbox.
+to the case of databases. For example, it could just as well manage test accounts in your payment providers' sandbox.
 
 There's [a framework](https://github.com/spring-cloud/spring-cloud-cloudfoundry-service-broker) for implementing brokers
 in Java with Spring. It will greatly simplify your efforts. What you will get is a Spring Boot app that you can deploy
-to your Cloud Foundry. However, there are other ways to achieve the same goal, with [Ruby](https://github.com/cloudfoundry-samples/github-service-broker-ruby)
+to your CF. However, there are other ways to achieve the same goal, with [Ruby](https://github.com/cloudfoundry-samples/github-service-broker-ruby)
 for instance.
 
 There is a [deployment script](broker/deploy.sh) for the Simple Hive service broker.
@@ -80,7 +82,7 @@ cf create-service-broker <brokername> <username> <password> <broker-url>
 
 ## Cloud connector
 
-When we bind an app to a service instance, Cloud Foundry injects information about the instance into the app's environment.
+When we bind an app to a service instance, CF injects information about the instance into the app's environment.
 In the case of Simple Hive you will find a database url in `VCAP`:
 ```json
 {
@@ -89,10 +91,7 @@ In the case of Simple Hive you will find a database url in `VCAP`:
    {
     "credentials": {
      "uri": "hive2://admin:secret-admin-password@simple-hive-service.local.pcfdev.io:80/your-db;transportMode=http;httpPath=simple-hive"
-    },
-    "label": "simple-hive",
-    ...
-    ]
+    }
    }
   ]
  }
@@ -131,8 +130,6 @@ and run the deployment script:
 BROKER_ADMIN_PASSWORD=<secret-password> ./deploy.sh
 ```
 
-You can confirm your deployment with `./test.sh`.
-
 You can also deploy each party individually:
 ```bash
 ./service/deploy.sh
@@ -140,4 +137,13 @@ You can also deploy each party individually:
 ./broker/deploy.sh  # make sure BROKER_ADMIN_PASSWORD is set  
 
 ./sample-client/deploy.sh
+```
+
+You can confirm your deployment with `./test.sh`. Or play with the sample client yourself:
+
+```bash
+$ curl -XPOST http://sample-client.local.pcfdev.io/alfred
+$ curl -XPOST http://sample-client.local.pcfdev.io/alfred
+$ curl -XGET http://sample-client.local.pcfdev.io/alfred
+2
 ```
