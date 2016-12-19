@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e -x
+set -e
 
 brokerHost() {
     echo `cf app simple-hive-broker | grep urls | cut -d " " -f 2`
@@ -10,10 +10,12 @@ serviceHost() {
     echo `cf app simple-hive-service | grep urls | cut -d " " -f 2`
 }
 
-assertBrokerAdminPasswordSet() {
+setBrokerAdminPasswordIfNotSet() {
     if [ "$BROKER_ADMIN_PASSWORD" = "" ]; then
-        echo 'Error: Make sure BROKER_ADMIN_PASSWORD is set.'
-        exit 1
+        BROKER_ADMIN_PASSWORD=$RANDOM
+        echo
+        echo "### Attention: BROKER_ADMIN_PASSWORD set to: $BROKER_ADMIN_PASSWORD"
+        echo
     fi
 }
 
@@ -27,7 +29,7 @@ cd $(dirname $0)
 
 ../gradlew :broker:assemble
 
-assertBrokerAdminPasswordSet
+setBrokerAdminPasswordIfNotSet
 
 hydrateEnv
 

@@ -124,17 +124,16 @@ curl -XGET http://sample-client.local.pcfdev.io/alfred
 
 ## Usage & deployment
 
-You can easily deploy the service, broker and sample client to any CF. Assuming your logged in to CF, just set an admin password for the broker
-and run the deployment script:
+You can easily deploy the service, broker and sample client to any CF. Assuming your logged in to CF and run the deployment script:
 ```bash
-BROKER_ADMIN_PASSWORD=<secret-password> ./deploy.sh
+./deploy.sh
 ```
 
 You can also deploy each party individually:
 ```bash
 ./service/deploy.sh
 
-./broker/deploy.sh  # make sure BROKER_ADMIN_PASSWORD is set  
+./broker/deploy.sh  
 
 ./sample-client/deploy.sh
 ```
@@ -146,4 +145,10 @@ $ curl -XPOST http://sample-client.local.pcfdev.io/alfred
 $ curl -XPOST http://sample-client.local.pcfdev.io/alfred
 $ curl -XGET http://sample-client.local.pcfdev.io/alfred
 2
+```
+
+You can configure the admin password for the broker by setting `BROKER_ADMIN_PASSWORD`. Otherwise, it's a random
+password which appears on stdout when deploying:
+```bash
+### Attention: BROKER_ADMIN_PASSWORD set to: 25184
 ```
