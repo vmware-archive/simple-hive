@@ -10,8 +10,6 @@ class HiveFileSystem {
     val localScratch: String = createDir("localScratch")
     val history: String = createDir("tmp")
     val tezInstallation: String = createDir("tezInstallation")
-    val hadoopTmp: String = createDir("hadooptmp")
-    val testLogs: String = createDir("logs")
 
     private fun createBaseDir(): String {
         return createDir(File.createTempFile("hive", ""))
