@@ -1,0 +1,176 @@
+---
+- - :whitelist
+  - MIT
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:07:02.841341000 Z
+- - :whitelist
+  - BSD
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:09:07.563484000 Z
+- - :whitelist
+  - BSD licence
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:09:07.563484000 Z
+- - :whitelist
+  - The BSD License
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:09:07.563484000 Z
+- - :whitelist
+  - The BSD 3-Clause License
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:09:07.563484000 Z
+- - :whitelist
+  - New BSD License
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:09:07.563484000 Z
+- - :whitelist
+  - New BSD license
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:09:07.563484000 Z
+- - :whitelist
+  - Apache 2.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:11:50.828298000 Z
+- - :whitelist
+  - Apache v2
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:08.194296000 Z
+- - :whitelist
+  - Apache Software License - Version 2.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - Apache Software Licenses
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - CDDL 1.1
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - Common Development and Distribution License (CDDL) v1.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - Public Domain
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - HSQLDB License, a BSD open source license
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - MPL 1.1
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - The JSON License
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - Common Public License Version 1.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - Eclipse Public License - v 1.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - WTFPL
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :whitelist
+  - GNU General Public Library
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:12:53.799218000 Z
+- - :license
+  - asm-parent
+  - BSD
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:38:52.316388000 Z
+- - :license
+  - dom4j
+  - BSD
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:40:40.482714000 Z
+- - :license
+  - jettison
+  - Apache 2.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:44:30.862678000 Z
+- - :license
+  - jta
+  - Common Development and Distribution License (CDDL) v1.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:47:08.839914000 Z
+- - :license
+  - oss-parent
+  - Apache 2.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:48:36.644571000 Z
+- - :license
+  - zookeeper
+  - Apache 2.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:56:15.855184000 Z
+- - :license
+  - servlet-api
+  - Common Development and Distribution License (CDDL) v1.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2016-12-20 13:56:34.657182000 Z
