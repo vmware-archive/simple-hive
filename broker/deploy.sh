@@ -27,7 +27,7 @@ hydrateEnv() {
 
 cd $(dirname $0)
 
-../gradlew :broker:assemble
+../gradlew :broker:clean :broker:assemble
 
 setBrokerAdminPasswordIfNotSet
 

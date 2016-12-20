@@ -4,6 +4,6 @@ set -e -x
 
 cd $(dirname $0)
 
-../gradlew :service:assemble
+../gradlew :service:clean :service:assemble
 
 cf push simple-hive-service -f ../manifest.yml

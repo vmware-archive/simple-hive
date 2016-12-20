@@ -9,4 +9,6 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-jdbc")
 
     compile project(":hive-connector")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }

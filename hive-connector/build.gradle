@@ -12,4 +12,6 @@ dependencies {
 		exclude group: 'log4', module: 'slf4j-log4j12'
 		exclude group: 'org.eclipse.jetty.aggregate'
 	}
+
+    testCompile("junit:junit:${junitVersion}")
 }
