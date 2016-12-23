@@ -12,5 +12,4 @@ class Authenticator : PasswdAuthenticationProvider {
             throw AuthenticationException()
         }
     }
-
 }

@@ -11,8 +11,8 @@ class Container(private val hiveConfig: HiveConfig) {
     fun init() {
         try {
             this.hiveServer.init(this.hiveConfig.build())
-        } catch (exc: Exception) {
-            throw IllegalStateException("Failed to create HiveServer :" + exc.message, exc)
+        } catch (e: Exception) {
+            throw IllegalStateException("Failed to create HiveServer :" + e.message, e)
         }
     }
 

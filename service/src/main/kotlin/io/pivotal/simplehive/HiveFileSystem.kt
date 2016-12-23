@@ -11,15 +11,9 @@ class HiveFileSystem {
     val history: String = createDir("tmp")
     val tezInstallation: String = createDir("tezInstallation")
 
-    private fun createBaseDir(): String {
-        return createDir(File.createTempFile("hive", ""))
-    }
+    private fun createBaseDir() = createDir(File.createTempFile("hive", ""))
 
-    private fun createDir(name: String): String {
-        val newDir = File(baseDir, name)
-
-        return createDir(newDir)
-    }
+    private fun createDir(name: String) = createDir(File(baseDir, name))
 
     private fun createDir(newDir: File): String {
         if (newDir.exists()) {
