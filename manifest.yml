@@ -1,10 +1,10 @@
 ---
 applications:
-
 - name: simple-hive-service
   memory: 1G
-  path: service/build/libs/simple-hive-service-0.0.1-SNAPSHOT.jar
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
+  disk_quota: 512M
+  buildpack: java_buildpack
+  path: service/build/libs/service-0.0.1-SNAPSHOT.jar
   env:
     SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
     SIMPLE_HIVE_SERVICE_ADMIN_PASSWORD: secret-admin-password
@@ -13,8 +13,9 @@ applications:
 
 - name: simple-hive-broker
   memory: 512M
-  path: broker/build/libs/simple-hive-broker-0.0.1-SNAPSHOT.jar
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
+  disk_quota: 512M
+  buildpack: java_buildpack
+  path: broker/build/libs/broker-0.0.1-SNAPSHOT.jar
   env:
     SIMPLE_HIVE_SERVICE_HTTP_PATH: simple-hive
     SIMPLE_HIVE_SERVICE_ADMIN_USERNAME: admin
@@ -22,7 +23,8 @@ applications:
 
 - name: sample-client
   memory: 512M
+  disk_quota: 512M
+  buildpack: java_buildpack
   path: sample-client/build/libs/sample-client-0.0.1-SNAPSHOT.jar
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.7
   services:
     - hive
