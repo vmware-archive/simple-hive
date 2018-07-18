@@ -30,6 +30,8 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import java.util.*
+import javax.annotation.PostConstruct
 
 @SpringBootApplication
 class SimpleHiveApplication(private val serviceConfig: ServiceConfig) : ApplicationRunner {
@@ -41,6 +43,11 @@ class SimpleHiveApplication(private val serviceConfig: ServiceConfig) : Applicat
         hiveServerContainer.init()
 
         hiveServerContainer.start()
+    }
+
+    @PostConstruct
+    fun started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
     }
 }
 
