@@ -23,16 +23,17 @@
  */
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 jar {
     baseName = 'sample-client'
 }
 
 dependencies {
+    compile project(":hive-connector")
+
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.boot:spring-boot-starter-jdbc")
-
-    compile project(":hive-connector")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

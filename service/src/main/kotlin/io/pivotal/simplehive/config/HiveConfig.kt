@@ -32,7 +32,7 @@ import java.util.*
 
 class HiveConfig(hiveFileSystem: HiveFileSystem, serviceConfig: ServiceConfig) {
 
-    val configurations = mapOf(
+    private val configurations = mapOf(
             // Transport Mode
             HIVE_SERVER2_TRANSPORT_MODE to "http",
             HIVE_SERVER2_THRIFT_HTTP_PORT to serviceConfig.port.toInt(),

@@ -31,8 +31,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.verify
-import org.mockito.runners.MockitoJUnitRunner
-import org.springframework.cloud.servicebroker.model.*
+import org.mockito.junit.MockitoJUnitRunner
+import org.springframework.cloud.servicebroker.model.instance.*
 import org.springframework.jdbc.core.JdbcTemplate
 
 @RunWith(MockitoJUnitRunner::class)
@@ -50,7 +50,7 @@ class InstanceServiceTest {
 
     @Test
     fun `should create a database when creating a service instance`() {
-        val request = CreateServiceInstanceRequest().withServiceInstanceId("test-instance-id-123")
+        val request = CreateServiceInstanceRequest.builder().serviceInstanceId("test-instance-id-123").build()
 
         instanceService.createServiceInstance(request)
 
@@ -59,7 +59,11 @@ class InstanceServiceTest {
 
     @Test
     fun `should drop database when deleting service instance`() {
-        val request = DeleteServiceInstanceRequest("test-instance-id-456", "test-service", "default", null)
+        val request = DeleteServiceInstanceRequest.builder()
+                .planId("default")
+                .serviceDefinitionId("test-service")
+                .serviceInstanceId("test-instance-id-456")
+                .build()
 
         instanceService.deleteServiceInstance(request)
 
@@ -68,8 +72,11 @@ class InstanceServiceTest {
 
     @Test
     fun `should recreate database when updating service instance`() {
-        val request = UpdateServiceInstanceRequest("test-service-def-id", "plan-id")
-                .withServiceInstanceId("test-instance-id-890")
+        val request = UpdateServiceInstanceRequest.builder()
+                .serviceDefinitionId("test-service-def-id")
+                .planId("plan-id")
+                .serviceInstanceId("test-instance-id-890")
+                .build()
 
         instanceService.updateServiceInstance(request)
 
@@ -78,7 +85,7 @@ class InstanceServiceTest {
 
     @Test
     fun `should return success when getting the last operation`() {
-        val request = GetLastServiceOperationRequest("any-service-instance-id")
+        val request = GetLastServiceOperationRequest.builder().serviceInstanceId("any-service-instance-id").build()
 
         val response = instanceService.getLastOperation(request)
 

@@ -30,7 +30,7 @@ import org.apache.hive.service.server.HiveServer2
 import kotlin.concurrent.thread
 
 class Container(private val hiveConfig: HiveConfig) {
-    val hiveServer: HiveServer2 = HiveServer2()
+    private val hiveServer: HiveServer2 = HiveServer2()
 
     fun init() {
         try {

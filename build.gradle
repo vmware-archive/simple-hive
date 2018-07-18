@@ -24,11 +24,11 @@
 
 buildscript {
     ext {
-        kotlinVersion = '1.0.5-2'
-        springBootVersion = '1.4.2.RELEASE'
+        kotlinVersion = '1.2.51'
+        springBootVersion = '2.0.3.RELEASE'
         assertJVersion = '3.6.1'
-        springCloudServiceBrokerVersion = '1.0.0.RELEASE'
-        cloudConnectorVersion = '1.2.3.RELEASE'
+        springCloudServiceBrokerVersion = '2.0.0.RELEASE'
+        cloudConnectorVersion = '2.0.2.RELEASE'
         hiveVersion = '1.2.1'
         hsqldbVersion = '2.3.1'
         tezVersion = '0.7.0'
@@ -36,7 +36,7 @@ buildscript {
         datanucleusRdbmsVersion = '3.2.11'
         datanucleusCoreVersion = '3.2.12'
         reflectionsVersion = '0.9.8'
-        springJdbcVersion = '4.3.4.RELEASE'
+        springJdbcVersion = '5.0.7.RELEASE'
         junitVersion = '4.12'
     }
 
@@ -47,6 +47,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
 
@@ -68,13 +69,29 @@ allprojects {
 
 subprojects {
     apply plugin: 'kotlin'
+    apply plugin: 'kotlin-spring'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    dependencies {
-        compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+    compileKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xjsr305=strict"]
+            jvmTarget = "1.8"
+        }
+    }
 
+    compileTestKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xjsr305=strict"]
+            jvmTarget = "1.8"
+        }
+    }
+
+    dependencies {
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        compile("org.jetbrains.kotlin:kotlin-reflect")
+        
         testCompile("org.assertj:assertj-core:${assertJVersion}")
     }
 }

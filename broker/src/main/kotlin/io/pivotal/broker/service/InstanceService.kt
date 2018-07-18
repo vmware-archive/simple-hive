@@ -26,14 +26,13 @@ package io.pivotal.broker.service
 
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
-import org.springframework.cloud.servicebroker.model.*
+import org.springframework.cloud.servicebroker.model.instance.*
 import org.springframework.cloud.servicebroker.service.ServiceInstanceService
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 
 @Service
-open class InstanceService
-constructor(private val jdbcTemplate: JdbcTemplate) : ServiceInstanceService {
+class InstanceService(private val jdbcTemplate: JdbcTemplate) : ServiceInstanceService {
 
     companion object {
         val log: Log = LogFactory.getLog(InstanceService::class.java)
@@ -43,7 +42,7 @@ constructor(private val jdbcTemplate: JdbcTemplate) : ServiceInstanceService {
         val instanceId = formatInstanceId(request.serviceInstanceId)
         log.info("creating service instance id=$instanceId")
         createDb(instanceId)
-        return CreateServiceInstanceResponse()
+        return CreateServiceInstanceResponse.builder().build()
     }
 
     private fun createDb(database: String) {
@@ -55,19 +54,19 @@ constructor(private val jdbcTemplate: JdbcTemplate) : ServiceInstanceService {
         log.info("updating service instance id=$instanceId")
         deleteDb(instanceId)
         createDb(instanceId)
-        return UpdateServiceInstanceResponse()
+        return UpdateServiceInstanceResponse.builder().build()
     }
 
     override fun getLastOperation(request: GetLastServiceOperationRequest): GetLastServiceOperationResponse {
         log.info("getting last operation")
-        return GetLastServiceOperationResponse().withOperationState(OperationState.SUCCEEDED)
+        return GetLastServiceOperationResponse.builder().operationState(OperationState.SUCCEEDED).build()
     }
 
     override fun deleteServiceInstance(request: DeleteServiceInstanceRequest): DeleteServiceInstanceResponse {
         val instanceId = formatInstanceId(request.serviceInstanceId)
         log.info("deleting service instance id=$instanceId")
         deleteDb(instanceId)
-        return DeleteServiceInstanceResponse()
+        return DeleteServiceInstanceResponse.builder().build()
     }
 
     private fun deleteDb(database: String) {

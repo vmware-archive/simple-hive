@@ -24,37 +24,40 @@
 
 package io.pivotal.broker.config
 
-import org.springframework.cloud.servicebroker.model.Catalog
-import org.springframework.cloud.servicebroker.model.Plan
-import org.springframework.cloud.servicebroker.model.ServiceDefinition
+import org.springframework.cloud.servicebroker.model.catalog.Catalog
+import org.springframework.cloud.servicebroker.model.catalog.Plan
+import org.springframework.cloud.servicebroker.model.catalog.ServiceDefinition
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.*
 
 @Configuration
-open class CatalogConfig {
+class CatalogConfig {
 
     @Bean
-    open fun catalog(): Catalog {
-        return Catalog(Collections.singletonList(
-                ServiceDefinition(
-                        "simple-hive",
-                        "simple-hive",
-                        "A simple Hive service",
-                        true,
-                        false,
-                        listOf(
-                                Plan(
-                                        "simple-hive-plan",
-                                        "default",
-                                        "This is the default plan.",
-                                        getPlanMetadata(),
-                                        true)),
-                        listOf("hive"),
-                        getServiceDefinitionMetadata(),
-                        null,
-                        null))
-        )
+    fun catalog(): Catalog {
+        return Catalog.builder()
+                .serviceDefinitions(
+                        ServiceDefinition.builder()
+                                .id("simple-hive")
+                                .name("simple-hive")
+                                .description("A simple Hive service")
+                                .bindable(true)
+                                .planUpdateable(false)
+                                .instancesRetrievable(false)
+                                .bindingsRetrievable(false)
+                                .plans(listOf(
+                                        Plan.builder()
+                                                .id("simple-hive-plan")
+                                                .name("default")
+                                                .description("This is the default plan.")
+                                                .metadata(getPlanMetadata())
+                                                .free(true)
+                                                .build()
+                                ))
+                                .tags("hive")
+                                .metadata(getServiceDefinitionMetadata())
+                                .build())
+                .build()
     }
 
     private fun getServiceDefinitionMetadata() = mapOf(

@@ -27,7 +27,7 @@ package io.pivotal.simplehive
 import java.io.File
 
 class HiveFileSystem {
-    val baseDir = createBaseDir()
+    private val baseDir = createBaseDir()
 
     val warehouse: String = createDir("warehouse")
     val scratch: String = createDir("scratch")

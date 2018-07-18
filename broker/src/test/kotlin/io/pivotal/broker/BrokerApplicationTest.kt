@@ -31,10 +31,9 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class BrokerApplicationTests {
+class BrokerApplicationTest {
 
 	@Test
-	fun contextLoads() {
+	fun `context loads`() {
 	}
-
 }

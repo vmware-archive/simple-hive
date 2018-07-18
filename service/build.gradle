@@ -23,15 +23,19 @@
  */
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
 
 jar {
-	baseName = 'simple-hive-service'
+    baseName = 'simple-hive-service'
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 
-    compile("org.apache.hive:hive-serde:${hiveVersion}")  {
+    compile("org.apache.hive:hive-serde:${hiveVersion}") {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'log4', module: 'slf4j-log4j12'
     }
@@ -55,7 +59,7 @@ dependencies {
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
 
     compile("org.apache.tez:tez-dag:${tezVersion}")
-    compile("org.apache.tez:tez-common:${tezVersion}"){
+    compile("org.apache.tez:tez-common:${tezVersion}") {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'log4', module: 'slf4j-log4j12'
     }
@@ -63,6 +67,8 @@ dependencies {
 
     compile("org.reflections:reflections:${reflectionsVersion}")
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     testCompile("org.springframework:spring-jdbc:${springJdbcVersion}")
 }

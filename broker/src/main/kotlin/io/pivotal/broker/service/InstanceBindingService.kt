@@ -27,16 +27,15 @@ package io.pivotal.broker.service
 import io.pivotal.broker.config.ServiceConfig
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceAppBindingResponse
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingRequest
-import org.springframework.cloud.servicebroker.model.CreateServiceInstanceBindingResponse
-import org.springframework.cloud.servicebroker.model.DeleteServiceInstanceBindingRequest
+import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceAppBindingResponse
+import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceBindingRequest
+import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstanceBindingResponse
+import org.springframework.cloud.servicebroker.model.binding.DeleteServiceInstanceBindingRequest
 import org.springframework.cloud.servicebroker.service.ServiceInstanceBindingService
 import org.springframework.stereotype.Service
 
 @Service
-open class InstanceBindingService
-constructor(private val config: ServiceConfig) : ServiceInstanceBindingService {
+class InstanceBindingService(private val config: ServiceConfig) : ServiceInstanceBindingService {
 
     companion object {
         val log: Log = LogFactory.getLog(InstanceBindingService::class.java)
@@ -50,12 +49,14 @@ constructor(private val config: ServiceConfig) : ServiceInstanceBindingService {
     override fun createServiceInstanceBinding(request: CreateServiceInstanceBindingRequest): CreateServiceInstanceBindingResponse {
         val instanceId = formatInstanceId(request.serviceInstanceId)
         log.info("binding service instance id=$instanceId")
-        return CreateServiceInstanceAppBindingResponse().withCredentials(mapOf("uri" to formatUri(instanceId)))
+        return CreateServiceInstanceAppBindingResponse.builder()
+                .credentials(mapOf("uri" to formatUri(instanceId)))
+                .build()
     }
 
     private fun formatUri(instanceId: String) =
             "hive2://${config.admin.username}:${config.admin.password}@${config.host}:${config.port}/" +
-            "$instanceId;transportMode=http;httpPath=${config.httpPath}"
+                    "$instanceId;transportMode=http;httpPath=${config.httpPath}"
 
     private fun formatInstanceId(instanceId: String) = instanceId.replace('-', '_')
 

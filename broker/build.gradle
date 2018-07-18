@@ -23,15 +23,16 @@
  */
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 jar {
-	baseName = 'simple-hive-broker'
+    baseName = 'simple-hive-broker'
 }
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework:spring-jdbc:${springJdbcVersion}")
-    compile("org.springframework.cloud:spring-cloud-cloudfoundry-service-broker:${springCloudServiceBrokerVersion}")
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile("org.springframework.cloud:spring-cloud-open-service-broker-core:${springCloudServiceBrokerVersion}")
 
     compile("org.apache.hive:hive-jdbc:${hiveVersion}") {
         exclude group: 'org.apache.derby', module: 'derby'
@@ -40,6 +41,5 @@ dependencies {
         exclude group: 'org.eclipse.jetty.aggregate'
     }
 
-    testCompile(group: "org.springframework.cloud", name: "spring-cloud-cloudfoundry-service-broker", version: "${springCloudServiceBrokerVersion}", classifier: "tests")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

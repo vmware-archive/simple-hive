@@ -35,16 +35,17 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-@TestPropertySource(properties = arrayOf(
-        "simple.hive.service.admin.username=test-admin",
-        "simple.hive.service.admin.password=test-admin-password"))
+@TestPropertySource(properties = [
+    "simple.hive.service.admin.username=test-admin",
+    "simple.hive.service.admin.password=test-admin-password"
+])
 class SimpleHiveApplicationTest {
     companion object {
-        val testDatabase = "test_db"
-        val testTable = "$testDatabase.test_table"
+        const val testDatabase = "test_db"
+        const val testTable = "$testDatabase.test_table"
 
-        val driver = "org.apache.hive.jdbc.HiveDriver"
-        val url = "jdbc:hive2://localhost:8080/default;transportMode=http;httpPath=simple-hive"
+        const val driver = "org.apache.hive.jdbc.HiveDriver"
+        const val url = "jdbc:hive2://localhost:8080/default;transportMode=http;httpPath=simple-hive"
 
         val jdbcTemplate = JdbcTemplate(DriverManagerDataSource(
                 driver,
@@ -81,7 +82,7 @@ class SimpleHiveApplicationTest {
     }
 
     private fun thenDataCanBeRetrieved(records: List<Pair<String, Int>>) {
-        val result = jdbcTemplate.query("SELECT * FROM $testTable ORDER BY VALUE") { rs, n ->
+        val result = jdbcTemplate.query("SELECT * FROM $testTable ORDER BY VALUE") { rs, _ ->
 
             Pair(rs.getString("key"), rs.getInt("value"))
         }

@@ -28,7 +28,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 
 @Service
-open class PingPongService(private val jdbcTemplate: JdbcTemplate) {
+class PingPongService(private val jdbcTemplate: JdbcTemplate) {
 
     fun recordWinForPlayer(player: String) {
         jdbcTemplate.update("INSERT INTO ping_pong VALUES (?)", player)

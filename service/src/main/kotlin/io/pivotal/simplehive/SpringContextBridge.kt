@@ -30,8 +30,7 @@ import org.springframework.context.ApplicationContextAware
 import org.springframework.stereotype.Component
 
 @Component
-class SpringContextBridge
-constructor(val adminConfig: AdminConfig) : ApplicationContextAware {
+class SpringContextBridge(val adminConfig: AdminConfig) : ApplicationContextAware {
 
     companion object {
         private lateinit var applicationContext: ApplicationContext
